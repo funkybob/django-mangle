@@ -1,0 +1,10 @@
+Django Mangle
+=============
+
+Put your static assets through the wringer.
+
+
+How it works
+------------
+
+Mangle works by adding a post-processing pipeline to your chosen file storage, allowing you to configure Manglers to reshape your assets.
