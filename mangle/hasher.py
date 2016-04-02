@@ -24,7 +24,7 @@ class HashMangler(Mangler):
 
         hash_value = self.hash_file(file_obj.content.encode('utf-8'))
         hash_name = '{}-{}{}'.format(base_name, hash_value, extensions)
-        print(hash_name)
+
         file_obj.path = PurePath(hash_name)
         file_obj.processed = True
         file_obj.save_pending = True
