@@ -7,8 +7,6 @@ class JsMangler(Mangler):
     '''
     Mixin post-processor for minifying CSS files
     '''
-    delete_orig = True
-
     def __init__(self, target, mangle=True, mangle_toplevel=False):
         self.mangle = mangle
         self.mangle_toplevel = mangle_toplevel
@@ -24,8 +22,10 @@ class JsMangler(Mangler):
     def process_file(self, file_obj):
         content = minify(file_obj.content, mangle=self.mangle, mangle_toplevel=self.mangle_toplevel)
 
+        file_obj.delete()
+
         file_obj.path = file_obj.path.stem + '.min.js'
         file_obj.content = content
         file_obj.processed = True
         file_obj.save_pending = True
-        return file_obj
+        yield file_obj

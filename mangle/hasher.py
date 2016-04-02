@@ -28,4 +28,4 @@ class HashMangler(Mangler):
         file_obj.path = PurePath(hash_name)
         file_obj.processed = True
         file_obj.save_pending = True
-        return file_obj
+        yield file_obj

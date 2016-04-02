@@ -68,10 +68,13 @@ class SourceFile:
             name = self.path
         self.storage.delete(name)
 
+    def fork(self, new_name, content):
+        new_obj = SourceFile(self.storage, new_name, self.orig_path, processed=True, save_pending=True)
+        new_obj.content = content
+        return new_obj
+
 
 class Mangler:
-    # Should we delete the original file?
-    delete_orig = False
 
     def __init__(self, target):
         self.target = target
@@ -80,14 +83,7 @@ class Mangler:
         for file_obj in processor:
 
             if self.can_process(file_obj):
-
-                if self.delete_orig:
-                    file_obj.content
-                    file_obj.delete()
-                    file_obj.processed = True
-                    file_obj.save_pending = True
-
-                yield self.process_file(file_obj)
+                yield from self.process_file(file_obj)
 
     def can_process(self, file_obj):  # pragma: no cover
         return False
