@@ -26,7 +26,8 @@ class ManglerMixin:
     def source(self, paths, **options):
         if hasattr(super(), 'post_pocess'):
             for orig_path, path, processed in super().post_process(paths, **options):
-                yield SourceFile(self, path, orig_path, processed)
+                # XXX This is broken -- this should be the original storage, not self
+                yield SourceFile(self, path, orig_path)
         else:
             for prefixed_path, (storage, path) in paths.items():
                 yield SourceFile(storage, prefixed_path, path)
@@ -40,7 +41,8 @@ class ManglerMixin:
         # Crank the handle
         for file_obj in source:
             print("Saving to {}".format(file_obj.current_name))
-            self._save(str(file_obj.current_name), ContentFile(file_obj.content))
+            self._save(str(file_obj.current_name),
+                       ContentFile(file_obj.content))
             yield str(file_obj.original_name), str(file_obj.current_name), True
 
 

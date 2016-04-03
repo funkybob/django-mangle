@@ -21,7 +21,9 @@ class JsMangler(Mangler):
         return True
 
     def process_file(self, file_obj):
-        content = minify(file_obj.content, mangle=self.mangle, mangle_toplevel=self.mangle_toplevel)
+        content = minify(file_obj.content,
+                         mangle=self.mangle,
+                         mangle_toplevel=self.mangle_toplevel)
 
         self.target.delete(file_obj.current_name)
 

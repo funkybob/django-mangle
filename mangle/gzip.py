@@ -2,7 +2,7 @@ import gzip
 
 from django.conf import settings
 
-from .base import Mangler, SourceFile
+from .base import Mangler
 
 
 class GzipMangler(Mangler):
