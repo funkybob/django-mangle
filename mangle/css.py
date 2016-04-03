@@ -8,7 +8,7 @@ class CssMangler(Mangler):
     Mixin post-processor for minifying CSS files
     '''
     def can_process(self, file_obj):
-        exts = file_obj.path.suffixes
+        exts = file_obj.current_name.suffixes
         if exts[-1] != '.css':
             return False
         if len(exts) > 1 and exts[-2] == '.min':
@@ -18,10 +18,8 @@ class CssMangler(Mangler):
     def process_file(self, file_obj):
         content = cssmin(file_obj.content)
 
-        file_obj.delete()
+        self.target.delete(file_obj.current_name)
 
-        file_obj.path = file_obj.path.stem + '.min.css'
+        file_obj.current_name = file_obj.current_name.stem + '.min.css'
         file_obj.content = content
-        file_obj.processed = True
-        file_obj.save_pending = True
         yield file_obj

@@ -10,10 +10,10 @@ class GzipMangler(Mangler):
         self.extensions = extensions or ['.css', '.js']
 
     def can_process(self, file_obj):
-        return file_obj.path.suffix in self.extensions
+        return file_obj.current_name.suffix in self.extensions
 
     def process_file(self, file_obj):
         content = gzip.compress(file_obj.content.encode(settings.FILE_CHARSET))
-        new_file = file_obj.fork(str(file_obj.path) + '.gz', content)
+        new_file = file_obj.fork(str(file_obj.current_name) + '.gz', content)
         yield file_obj
         yield new_file
