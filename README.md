@@ -14,27 +14,28 @@ Quickstart
 
 1. Create your custom storage backend, using the mixin
 
-```
-from django.contrib.staticfiles.storage import StaticFilesStorage
-import mangle
+    ```
+    from django.contrib.staticfiles.storage import StaticFilesStorage
+    import mangle
 
-class CustomStorage(mangle.ManglerMixin, StaticFilesStorage):
-    pass
+    class CustomStorage(mangle.ManglerMixin, StaticFilesStorage):
+        pass
 ```
 
 1. Add storage setting
 
-```
-STATICFILES_STORAGE='mysite.storage.CustomStorage'
-```
+    ```
+    STATICFILES_STORAGE='mysite.storage.CustomStorage'
+    ```
 
 1. Configure manglers
 
-```
-MANGLERS=[
-    ('mangle.css.CssMangler', {}),
-    ('mangle.js.JsMangler', {}),
-    ('mangle.gzip.GzipMangler', {'extensions': ['.css', '.js', '.txt']}),
-]
+    ```
+    MANGLERS=[
+        ('mangle.css.CssMangler', {}),
+        ('mangle.js.JsMangler', {}),
+        ('mangle.gzip.GzipMangler', {'extensions': ['.css', '.js', '.txt']}),
+    ]
+    ```
 
 1. Run `manage.py collectstatic`
