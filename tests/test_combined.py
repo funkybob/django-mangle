@@ -22,7 +22,6 @@ class MidedMixinTestCase(StaticTestCase):
     )
     def test_mixed(self):
         stats = self.collect()
-        print(stats)
         self.assertFileExists('input.min.js')
         self.assertFileExists('input.min.js.gz')
         self.assertFileExists('input.min.css')
