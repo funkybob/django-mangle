@@ -57,6 +57,15 @@ class SourceFile:
         with self.storage.open(self.original_name) as source:
             return source.read().decode(settings.FILE_CHARSET)
 
+    def add_suffix(self, suffix, position=-1):
+        ext_len = len(''.join(self.current_name.suffixes))
+        base_name = str(self.current_name)[:-ext_len]
+
+        suffixes = self.current_name.suffixes
+        suffixes.insert(position, suffix)
+        suffixes = ''.join(suffixes)
+        self.current_name = PurePath(base_name + suffixes)
+
     def fork(self, new_name, content):
         new_obj = SourceFile(self.storage, self.original_name, new_name)
         new_obj.content = content
@@ -73,6 +82,8 @@ class Mangler:
 
             if self.can_process(file_obj):
                 yield from self.process_file(file_obj)
+            else:
+                yield file_obj
 
     def can_process(self, file_obj):  # pragma: no cover
         return False
