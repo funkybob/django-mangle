@@ -40,7 +40,6 @@ class ManglerMixin:
 
         # Crank the handle
         for file_obj in source:
-            print("Saving to {}".format(file_obj.current_name))
             self._save(str(file_obj.current_name),
                        ContentFile(file_obj.content))
             yield str(file_obj.original_name), str(file_obj.current_name), True
