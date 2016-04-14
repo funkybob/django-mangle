@@ -20,5 +20,6 @@ class CssMangler(Mangler):
 
         self.target.delete(file_obj.current_name)
 
-        file_obj = file_obj.fork(file_obj.current_name.stem + '.min.css', content)
+        file_obj.content = content
+        file_obj.add_suffix('.min', -2)
         yield file_obj
