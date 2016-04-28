@@ -1,7 +1,5 @@
 import gzip
 
-from django.conf import settings
-
 from .base import Mangler
 
 
@@ -13,7 +11,7 @@ class GzipMangler(Mangler):
         return file_obj.current_name.suffix in self.extensions
 
     def process_file(self, file_obj):
-        content = gzip.compress(file_obj.content.encode(settings.FILE_CHARSET))
+        content = gzip.compress(file_obj.content)
         new_file = file_obj.fork(str(file_obj.current_name) + '.gz', content)
         yield file_obj
         yield new_file

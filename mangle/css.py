@@ -16,10 +16,10 @@ class CssMangler(Mangler):
         return True
 
     def process_file(self, file_obj):
-        content = cssmin(file_obj.content)
+        content = cssmin(file_obj.str)
 
         self.target.delete(file_obj.current_name)
 
-        file_obj.content = content
+        file_obj.str = content
         file_obj.add_suffix('.min', -2)
         yield file_obj

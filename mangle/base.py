@@ -45,6 +45,19 @@ class ManglerMixin:
             yield str(file_obj.original_name), str(file_obj.current_name), True
 
 
+class StrProperty:
+    '''
+    Property to auto encode/decode the content
+    '''
+    def __get__(self, instance, owner):
+        if instance is None:
+            return self
+        return instance.content.decode(settings.FILE_CHARSET)
+
+    def __set__(self, instance, value):
+        instance.content = value.encode(settings.FILE_CHARSET)
+
+
 class SourceFile:
     def __init__(self, storage, original_name, current_name=None):
         self.storage = storage
@@ -54,7 +67,9 @@ class SourceFile:
     @cached_property
     def content(self):
         with self.storage.open(self.original_name) as source:
-            return source.read().decode(settings.FILE_CHARSET)
+            return source.read()
+
+    str = StrProperty()
 
     def add_suffix(self, suffix, position=-1):
         ext_len = len(''.join(self.current_name.suffixes))
@@ -67,7 +82,10 @@ class SourceFile:
 
     def fork(self, new_name, content):
         new_obj = SourceFile(self.storage, self.original_name, new_name)
-        new_obj.content = content
+        if isinstance(content, str):
+            new_obj.str = content
+        else:
+            new_obj.content = content
         return new_obj
 
 

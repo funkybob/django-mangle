@@ -22,7 +22,7 @@ class HashMangler(Mangler):
         ext_len = len(extensions)
         base_name = str(file_obj.current_name)[:-ext_len]
 
-        hash_value = self.hash_file(file_obj.content.encode('utf-8'))
+        hash_value = self.hash_file(file_obj.content)
         hash_name = '{}-{}{}'.format(base_name, hash_value, extensions)
 
         file_obj.current_name = PurePath(hash_name)
