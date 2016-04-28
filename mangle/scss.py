@@ -1,5 +1,4 @@
 from scss.compiler import Compiler
-from scss.errors import SassSyntaxError
 
 from .base import Mangler
 
