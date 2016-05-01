@@ -12,7 +12,7 @@ env:
 
 install:
   - pip install -U pip
-  - pip install -r requirements_test.py
+  - pip install -r requirements_test.txt
   - pip install $DJANGO
 
 script:
