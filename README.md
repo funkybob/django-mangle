@@ -38,4 +38,6 @@ Quickstart
     ]
     ```
 
+    This configuration will minify all `.css` files using ``rcssmin``, minify all `.js` files using ``slimit``, and finally produce a `.gz` version of any `.css`, `.js`, or `.txt` file.
+
 1. Run `manage.py collectstatic`
